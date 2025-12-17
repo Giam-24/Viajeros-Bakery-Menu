@@ -4,27 +4,41 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pizza Price List · Viajeros Bakery</title>
+
   <style>
     :root{
-      --bg:#d7cfb4;         /* tono parecido al flyer */
-      --ink:#111;
-      --muted:#3a3a3a;
-      --paper:#f3ead6;      /* tarjetas beige */
-      --paper2:#efe3c8;
-      --shadow:0 18px 45px rgba(0,0,0,.25);
-      --shadow2:0 14px 28px rgba(0,0,0,.18);
+      /* Paleta: blancos, rojos y grises (sin azules) */
+      --bg:#f2f2f2;
+      --ink:#111111;
+      --muted:#4a4a4a;
+
+      --paper:#ffffff;      /* tarjetas */
+      --paper2:#f7f7f7;     /* degradado suave */
+      --line:rgba(0,0,0,.10);
+
+      --shadow:0 18px 45px rgba(0,0,0,.18);
+      --shadow2:0 14px 28px rgba(0,0,0,.14);
+
       --radius:18px;
-      --accent:#b31b1b;     /* rojo */
+
+      --red:#b10f0f;        /* rojo principal */
+      --red2:#e01616;       /* rojo vivo (detalles) */
+      --grayA:#e9e9e9;
+      --grayB:#dcdcdc;
     }
+
     *{box-sizing:border-box}
+
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--ink);
+
+      /* Fondo tipo flyer: blanco/gris + imagen de doodles */
       background:
-        radial-gradient(1000px 650px at 20% -10%, rgba(255,255,255,.45), rgba(255,255,255,0)),
-        linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,0)),
-        url("assets/bg-doodles.png"); /* pon aquí tu fondo */
+        radial-gradient(1000px 650px at 20% -10%, rgba(255,255,255,.95), rgba(255,255,255,0)),
+        linear-gradient(180deg, #ffffff, var(--bg)),
+        url("assets/bg-doodles.png");
       background-size: cover;
       background-position: center;
       min-height:100vh;
@@ -55,8 +69,9 @@
       line-height:0.95;
       letter-spacing:1px;
       font-weight:900;
-      color:var(--accent);
+      color:var(--red);
       text-transform:uppercase;
+      text-shadow: 0 10px 18px rgba(0,0,0,.10);
     }
     .subtitle{
       margin:0;
@@ -68,7 +83,7 @@
     .logo{
       width:165px;
       height:auto;
-      filter: drop-shadow(0 10px 12px rgba(0,0,0,.25));
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,.18));
     }
 
     /* Layout principal */
@@ -91,20 +106,36 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow2);
       padding:16px 16px 14px;
-      border: 1px solid rgba(0,0,0,.06);
+      border: 1px solid var(--line);
     }
     .card h3{
       margin:0 0 10px;
       font-size:30px;
       font-weight:900;
       font-family: Georgia, "Times New Roman", serif;
+      position:relative;
+      padding-bottom:8px;
     }
+    /* Línea roja debajo del título (sin azul) */
+    .card h3::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:78px;
+      height:4px;
+      border-radius:999px;
+      background: linear-gradient(90deg, var(--red2), var(--red));
+      opacity:.95;
+    }
+
     .smallNote{
       margin:-6px 0 10px;
       color:var(--muted);
       font-size:13px;
-      font-weight:600;
+      font-weight:650;
     }
+
     .prices{
       display:grid;
       gap:8px;
@@ -118,10 +149,22 @@
       gap:10px;
       font-size:18px;
       font-weight:800;
+      border-bottom: 1px dashed rgba(0,0,0,.14);
+      padding-bottom:6px;
+    }
+    .prices li:last-child{
+      border-bottom:none;
+      padding-bottom:0;
     }
     .prices .size{
       font-family: Georgia, "Times New Roman", serif;
       font-weight:900;
+      color:#222;
+    }
+    .prices .val{
+      font-weight:1000;
+      color:var(--red);
+      white-space:nowrap;
     }
 
     /* Fotos derecha tipo polaroid */
@@ -132,11 +175,11 @@
       padding-top:6px;
     }
     .polaroid{
-      background:#fff;
+      background:#ffffff;
       border-radius:14px;
       padding:12px 12px 18px;
       box-shadow: var(--shadow);
-      border:1px solid rgba(0,0,0,.08);
+      border:1px solid rgba(0,0,0,.10);
       transform: rotate(-1.2deg);
     }
     .polaroid:nth-child(2){ transform: rotate(1.1deg); }
@@ -149,13 +192,14 @@
       object-fit:cover;
       border-radius:10px;
       display:block;
+      filter: contrast(1.03) saturate(1.02);
     }
 
     /* Barra inferior “LLAMA AL” */
     .callout{
       margin-top:18px;
-      background: rgba(255,255,255,.55);
-      border: 1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(0,0,0,.10);
       border-radius: 22px;
       padding:18px 16px;
       display:flex;
@@ -169,13 +213,15 @@
       width:62px;
       height:62px;
       border-radius:999px;
-      background: var(--accent);
+      background: linear-gradient(180deg, var(--red2), var(--red));
       display:grid;
       place-items:center;
-      box-shadow: 0 14px 26px rgba(179,27,27,.35);
+      box-shadow: 0 14px 26px rgba(177,15,15,.25);
       flex:0 0 auto;
+      border:1px solid rgba(0,0,0,.10);
     }
     .phoneIcon svg{ width:34px; height:34px; fill:#fff; }
+
     .callText{
       text-align:center;
       line-height:1.15;
@@ -185,11 +231,16 @@
       letter-spacing:1px;
       font-size:22px;
       text-transform:uppercase;
+      color:#111;
     }
     .callText .nums{
       margin-top:6px;
       font-size:22px;
       font-weight:1000;
+      color:#111;
+    }
+    .callText .nums span{
+      color:var(--red);
     }
 
     /* Responsive */
@@ -221,7 +272,7 @@
         <p class="subtitle">Price List</p>
       </div>
 
-      <!-- Logo -->
+      <!-- Logo (pon tu logo en assets/logo.png) -->
       <img class="logo" src="assets/logo.png" alt="Viajeros Bakery" />
     </header>
 
@@ -233,30 +284,30 @@
         <article class="card">
           <h3>Pizza de Queso</h3>
           <ul class="prices">
-            <li><span class="size">Pizza de 8"</span>  <span>$5.99</span></li>
-            <li><span class="size">Pizza de 10"</span> <span>$8.99</span></li>
-            <li><span class="size">Pizza de 12"</span> <span>$12.99</span></li>
-            <li><span class="size">Pizza de 16"</span> <span>$17.99</span></li>
+            <li><span class="size">Pizza de 8"</span>  <span class="val">$5.99</span></li>
+            <li><span class="size">Pizza de 10"</span> <span class="val">$8.99</span></li>
+            <li><span class="size">Pizza de 12"</span> <span class="val">$12.99</span></li>
+            <li><span class="size">Pizza de 16"</span> <span class="val">$17.99</span></li>
           </ul>
         </article>
 
         <article class="card">
           <h3>Pizza de Pepperoni</h3>
           <ul class="prices">
-            <li><span class="size">Pizza de 8"</span>  <span>$7.99</span></li>
-            <li><span class="size">Pizza de 10"</span> <span>$10.99</span></li>
-            <li><span class="size">Pizza de 12"</span> <span>$13.99</span></li>
-            <li><span class="size">Pizza de 16"</span> <span>$21.99</span></li>
+            <li><span class="size">Pizza de 8"</span>  <span class="val">$7.99</span></li>
+            <li><span class="size">Pizza de 10"</span> <span class="val">$10.99</span></li>
+            <li><span class="size">Pizza de 12"</span> <span class="val">$13.99</span></li>
+            <li><span class="size">Pizza de 16"</span> <span class="val">$21.99</span></li>
           </ul>
         </article>
 
         <article class="card">
           <h3>Pizza de Vegetales</h3>
           <ul class="prices">
-            <li><span class="size">Pizza de 8"</span>  <span>$8.99</span></li>
-            <li><span class="size">Pizza de 10"</span> <span>$11.99</span></li>
-            <li><span class="size">Pizza de 12"</span> <span>$14.99</span></li>
-            <li><span class="size">Pizza de 16"</span> <span>$19.99</span></li>
+            <li><span class="size">Pizza de 8"</span>  <span class="val">$8.99</span></li>
+            <li><span class="size">Pizza de 10"</span> <span class="val">$11.99</span></li>
+            <li><span class="size">Pizza de 12"</span> <span class="val">$14.99</span></li>
+            <li><span class="size">Pizza de 16"</span> <span class="val">$19.99</span></li>
           </ul>
         </article>
 
@@ -264,10 +315,10 @@
           <h3>Pizza 3 Carnes</h3>
           <p class="smallNote">Bacon, Chorizo, Pepperoni, Salchicha</p>
           <ul class="prices">
-            <li><span class="size">Pizza de 8"</span>  <span>$11.99</span></li>
-            <li><span class="size">Pizza de 10"</span> <span>$14.99</span></li>
-            <li><span class="size">Pizza de 12"</span> <span>$17.99</span></li>
-            <li><span class="size">Pizza de 16"</span> <span>$25.99</span></li>
+            <li><span class="size">Pizza de 8"</span>  <span class="val">$11.99</span></li>
+            <li><span class="size">Pizza de 10"</span> <span class="val">$14.99</span></li>
+            <li><span class="size">Pizza de 12"</span> <span class="val">$17.99</span></li>
+            <li><span class="size">Pizza de 16"</span> <span class="val">$25.99</span></li>
           </ul>
         </article>
 
@@ -291,7 +342,9 @@
       </div>
       <div class="callText">
         <div class="label">LLAMA AL:</div>
-        <div class="nums">787-260-2181 · 787-837-7228 · 787-698-7228</div>
+        <div class="nums">
+          <span>787-260-2181</span> · <span>787-837-7228</span> · <span>787-698-7228</span>
+        </div>
       </div>
     </footer>
 
